@@ -26,7 +26,7 @@ Goal::Goal(Renderer& renderer, int x, int y, int flr)
 		model.SetNormalsIndependentFlat();
 
 		AddStaticBind(std::make_unique<VertexBuffer>(renderer, model.vertices));
-		AddStaticBind(std::make_unique<Texture>(renderer, Surface::FromFile("Textures\\doittoem.png")));
+		AddStaticBind(std::make_unique<Texture>(renderer, Surface::FromFile("Textures\\goal.png")));
 
 		AddStaticBind(std::make_unique<Blend>(renderer, true));
 

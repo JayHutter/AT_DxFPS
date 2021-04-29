@@ -362,9 +362,11 @@
     <Image Include="Textures\cube.png" />
     <Image Include="Textures\doittoem.png" />
     <Image Include="Textures\floor.png" />
+    <Image Include="Textures\goal.png" />
     <Image Include="Textures\Harada.png" />
     <Image Include="Textures\monke.png" />
     <Image Include="Textures\shot.png" />
+    <Image Include="Textures\WinScreen.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FPS.rc" />

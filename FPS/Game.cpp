@@ -102,5 +102,6 @@ void Game::WinScreen(float dt)
 	{
 		currentLevel = 0;
 		LoadLevel(0);
+		completed = false;
 	}
 }

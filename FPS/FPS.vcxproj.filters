@@ -413,6 +413,12 @@
     <Image Include="Textures\doittoem.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+    <Image Include="Textures\goal.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="Textures\WinScreen.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FPS.rc">

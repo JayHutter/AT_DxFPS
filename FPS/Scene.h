@@ -45,7 +45,7 @@ private:
 
 	enum class Cull
 	{
-		RENDER = 70,
+		RENDER = 100,
 		UPDATE = 30,
 		COLLISION = 20
 	};
