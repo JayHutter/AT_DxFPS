@@ -1,10 +1,7 @@
 #include "IndexBuffer.h"
-#include "GraphicThrowMacro.h"
 
 IndexBuffer::IndexBuffer(Renderer& renderer, const std::vector<unsigned short>& indices) : count((UINT)indices.size())
 {
-	INFOMANAGER(renderer);
-	
 	D3D11_BUFFER_DESC idb = {};
 	idb.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	idb.Usage = D3D11_USAGE_DEFAULT;
@@ -14,7 +11,7 @@ IndexBuffer::IndexBuffer(Renderer& renderer, const std::vector<unsigned short>& 
 	idb.StructureByteStride = sizeof(unsigned short);
 	D3D11_SUBRESOURCE_DATA isd = {};
 	isd.pSysMem = indices.data();
-	GFX_THROW_INFO(GetDevice(renderer)->CreateBuffer(&idb, &isd, &pIndexBuffer));
+	GetDevice(renderer)->CreateBuffer(&idb, &isd, &pIndexBuffer);
 }
 
 void IndexBuffer::Bind(Renderer& renderer) noexcept

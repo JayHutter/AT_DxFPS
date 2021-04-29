@@ -1,10 +1,7 @@
 #include "Blend.h"
-#include "GraphicThrowMacro.h"
 
 Blend::Blend(Renderer& renderer, bool blending) : blending(blending)
 {
-	INFOMANAGER(renderer);
-
 	D3D11_BLEND_DESC blendDesc = {};
 	auto& brt = blendDesc.RenderTarget[0];
 	if (blending)
@@ -24,7 +21,7 @@ Blend::Blend(Renderer& renderer, bool blending) : blending(blending)
 		brt.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	}
 
-	GFX_THROW_INFO(GetDevice(renderer)->CreateBlendState(&blendDesc, &pBlend));
+	GetDevice(renderer)->CreateBlendState(&blendDesc, &pBlend);
 }
 
 void Blend::Bind(Renderer& renderer) noexcept

@@ -1,6 +1,5 @@
 #include "Floor.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Plane.h"
 #include "Surface.h"
 #include "Texture.h"

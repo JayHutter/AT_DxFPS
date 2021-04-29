@@ -1,6 +1,5 @@
 #include "Bullet.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Plane.h"
 #include "Enemy.h"
 

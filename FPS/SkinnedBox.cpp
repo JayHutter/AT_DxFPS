@@ -1,6 +1,5 @@
 #include "SkinnedBox.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Cube.h"
 #include "Surface.h"
 #include "Texture.h"

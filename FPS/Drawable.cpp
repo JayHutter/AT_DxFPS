@@ -1,5 +1,4 @@
 #include "Drawable.h"
-#include "GraphicThrowMacro.h"
 #include "IndexBuffer.h"
 #include <cassert>
 #include <typeinfo>

@@ -9,6 +9,5 @@ public:
 protected:
 	static ID3D11DeviceContext* GetContext(Renderer& renderer) noexcept;
 	static ID3D11Device* GetDevice(Renderer& renderer) noexcept;
-	static DxgiInfoManager& GetInfoManager(Renderer& renderer) noexcept;// (!IS_DEBUG);
 };
 

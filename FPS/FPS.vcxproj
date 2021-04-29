@@ -214,7 +214,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GDIPlusManager.h" />
     <ClInclude Include="Goal.h" />
-    <ClInclude Include="GraphicThrowMacro.h" />
     <ClInclude Include="nlohmann\json.hpp" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plane.h" />

@@ -1,6 +1,5 @@
 #include "Goal.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Plane.h"
 
 Goal::Goal(Renderer& renderer, int x, int y, int flr)

@@ -1,6 +1,5 @@
 #include "Box.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Cube.h"
 
 Box::Box(Renderer& renderer, float x, float y, float z)

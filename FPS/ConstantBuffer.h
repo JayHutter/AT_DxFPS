@@ -1,6 +1,5 @@
 #pragma once
 #include "Bindable.h"
-#include "GraphicThrowMacro.h"
 
 template<typename C>
 class ConstantBuffer : public Bindable
@@ -8,21 +7,17 @@ class ConstantBuffer : public Bindable
 public:
 	void Update(Renderer& renderer, const C& consts)
 	{
-		INFOMANAGER(renderer);
-
 		D3D11_MAPPED_SUBRESOURCE msr;
-		GFX_THROW_INFO(GetContext(renderer)->Map(
+		GetContext(renderer)->Map(
 			pConstantBuffer.Get(), 0u,
 			D3D11_MAP_WRITE_DISCARD, 0u,
 			&msr
-		));
+		);
 		memcpy(msr.pData, &consts, sizeof(consts));
 		GetContext(renderer)->Unmap(pConstantBuffer.Get(), 0u);
 	}
 	ConstantBuffer(Renderer& renderer, const C& consts, UINT slot = 0u) : slot(slot)
 	{
-		INFOMANAGER(renderer);
-
 		D3D11_BUFFER_DESC cbd;
 		cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		cbd.Usage = D3D11_USAGE_DYNAMIC;
@@ -33,12 +28,10 @@ public:
 
 		D3D11_SUBRESOURCE_DATA csd = {};
 		csd.pSysMem = &consts;
-		GFX_THROW_INFO(GetDevice(renderer)->CreateBuffer(&cbd, &csd, &pConstantBuffer));
+		GetDevice(renderer)->CreateBuffer(&cbd, &csd, &pConstantBuffer);
 	}
 	ConstantBuffer(Renderer& renderer, UINT slot = 0u) : slot(slot)
 	{
-		INFOMANAGER(renderer);
-
 		D3D11_BUFFER_DESC cbd;
 		cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		cbd.Usage = D3D11_USAGE_DYNAMIC;
@@ -46,7 +39,7 @@ public:
 		cbd.MiscFlags = 0u;
 		cbd.ByteWidth = sizeof(C);
 		cbd.StructureByteStride = 0u;
-		GFX_THROW_INFO(GetDevice(renderer)->CreateBuffer(&cbd, nullptr, &pConstantBuffer));
+		GetDevice(renderer)->CreateBuffer(&cbd, nullptr, &pConstantBuffer);
 	}
 protected:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> pConstantBuffer;

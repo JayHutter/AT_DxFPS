@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Plane.h"
 
 Enemy::Enemy(Renderer& renderer, int x, int y, int flr)

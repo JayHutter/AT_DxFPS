@@ -2,7 +2,6 @@
 #include "dxerr.h"
 #include <sstream>
 #include <DirectXMath.h>
-#include "GraphicThrowMacro.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -41,7 +40,7 @@ Renderer::Renderer(HWND hWnd)
 
 	HRESULT hr = NOERROR;
 
-	GFX_THROW_INFO(D3D11CreateDeviceAndSwapChain(
+	D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
@@ -54,11 +53,11 @@ Renderer::Renderer(HWND hWnd)
 		&pDevice,
 		nullptr,
 		&pContext
-	));
+	);
 
 	wrl::ComPtr<ID3D11Resource> pBackBuffer;
-	GFX_THROW_INFO(pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer));
-	GFX_THROW_INFO(pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pRenderTarget));
+	pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
+	pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pRenderTarget);
 
 	//Depth Stencil buffer
 	D3D11_DEPTH_STENCIL_DESC dsDesc = {};
@@ -66,7 +65,7 @@ Renderer::Renderer(HWND hWnd)
 	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
 	wrl::ComPtr<ID3D11DepthStencilState> pDSState;
-	GFX_THROW_INFO(pDevice->CreateDepthStencilState(&dsDesc, &pDSState));
+	pDevice->CreateDepthStencilState(&dsDesc, &pDSState);
 	pContext->OMSetDepthStencilState(pDSState.Get(), 1u);
 
 	//Create Depth Texture
@@ -81,14 +80,14 @@ Renderer::Renderer(HWND hWnd)
 	descDepth.SampleDesc.Quality = 0u;
 	descDepth.Usage = D3D11_USAGE_DEFAULT;
 	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	GFX_THROW_INFO(pDevice->CreateTexture2D(&descDepth, nullptr, &pDepthStencil));
+	pDevice->CreateTexture2D(&descDepth, nullptr, &pDepthStencil);
 
 	//Create depth stencil texture view
 	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
 	descDSV.Format = DXGI_FORMAT_D32_FLOAT;
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0u;
-	GFX_THROW_INFO(pDevice->CreateDepthStencilView(pDepthStencil.Get(), &descDSV, &pDepthView));
+	pDevice->CreateDepthStencilView(pDepthStencil.Get(), &descDSV, &pDepthView);
 	pContext->OMSetRenderTargets(1u, pRenderTarget.GetAddressOf(), pDepthView.Get());
 
 	// configure viewport
@@ -111,11 +110,11 @@ void Renderer::DrawFrame()
 	{
 		if (hr == DXGI_ERROR_DEVICE_REMOVED)
 		{
-			throw GFX_DEVICE_REMOVED_EXCEPT(pDevice->GetDeviceRemovedReason());
+			pDevice->GetDeviceRemovedReason();
 		}
 		else
 		{
-			throw GFX_EXCEPT(hr);
+			throw;
 		}
 	}
 }
@@ -168,7 +167,7 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 
 	D3D11_SUBRESOURCE_DATA sData = {};
 	sData.pSysMem = verts;
-	GFX_THROW_INFO(pDevice->CreateBuffer(&bufferDesc, &sData, &pVertexBuffer));
+	pDevice->CreateBuffer(&bufferDesc, &sData, &pVertexBuffer);
 
 	//index buffer
 	const unsigned short indices[] =
@@ -190,7 +189,7 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 	idb.StructureByteStride = sizeof(unsigned short);
 	D3D11_SUBRESOURCE_DATA isd = {};
 	isd.pSysMem = indices;
-	GFX_THROW_INFO(pDevice->CreateBuffer(&idb, &isd, &pIndexBuffer));
+	pDevice->CreateBuffer(&idb, &isd, &pIndexBuffer);
 	pContext->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u);
 
 	//constant buffer
@@ -219,7 +218,7 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 	cbd.StructureByteStride = 0u;
 	D3D11_SUBRESOURCE_DATA csd = {};
 	csd.pSysMem = &cb;
-	GFX_THROW_INFO(pDevice->CreateBuffer(&cbd, &csd, &pConstantBuffer));
+	pDevice->CreateBuffer(&cbd, &csd, &pConstantBuffer);
 	pContext->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
 
 	struct ConstantBufferA
@@ -253,7 +252,7 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 	cbda.StructureByteStride = 0u;
 	D3D11_SUBRESOURCE_DATA csda = {};
 	csda.pSysMem = &cba;
-	GFX_THROW_INFO(pDevice->CreateBuffer(&cbda, &csda, &pConstantBufferA));
+	pDevice->CreateBuffer(&cbda, &csda, &pConstantBufferA);
 	pContext->PSSetConstantBuffers(0u, 1u, pConstantBufferA.GetAddressOf());
 
 	//Bind Vertex buffer to the pipeline
@@ -266,13 +265,13 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 
 	//Create Pixel Shader
 	wrl::ComPtr<ID3D11PixelShader> pPixelShader;
-	GFX_THROW_INFO(D3DReadFileToBlob(L"PixelShader.cso", &pBlob));
-	GFX_THROW_INFO(pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader));
+	D3DReadFileToBlob(L"PixelShader.cso", &pBlob);
+	pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader);
 	pContext->PSSetShader(pPixelShader.Get(), nullptr, 0u);
 
 	//Create vertex shader
-	GFX_THROW_INFO(D3DReadFileToBlob(L"VertexShader.cso", &pBlob));
-	GFX_THROW_INFO(pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader));
+	D3DReadFileToBlob(L"VertexShader.cso", &pBlob);
+	pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader);
 	pContext->VSSetShader(pVertexShader.Get(), nullptr, 0u);
 
 	//Setup Viewport
@@ -295,11 +294,11 @@ void Renderer::TestDraw(float x, float y, float z, float angle)
 		{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	}; 
 
-	GFX_THROW_INFO(pDevice->CreateInputLayout(elmtDesc, (UINT)std::size(elmtDesc), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout));
+	pDevice->CreateInputLayout(elmtDesc, (UINT)std::size(elmtDesc), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
 
 	pContext->IASetInputLayout(pInputLayout.Get());
 
-	GFX_THROW_INFO_ONLY(pContext->DrawIndexed((UINT)std::size(indices), 0u, 0u)); 
+	pContext->DrawIndexed((UINT)std::size(indices), 0u, 0u); 
 }
 
 void Renderer::DrawIndexed(UINT count) noexcept

@@ -1,6 +1,5 @@
 #include "FloatingTest.h"
 #include "Bindables.h"
-#include "GraphicThrowMacro.h"
 #include "Cube.h"
 
 FloatingTest::FloatingTest(Renderer& renderer, float x, float y, float z, float width, float height, float depth)

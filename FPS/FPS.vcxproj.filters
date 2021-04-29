@@ -206,12 +206,6 @@
     <ClInclude Include="Exception.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicThrowMacro.h">
-      <Filter>Header Files\Exceptions\Macro</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowThrowMacro.h">
-      <Filter>Header Files\Exceptions\Macro</Filter>
-    </ClInclude>
     <ClInclude Include="Bindable.h">
       <Filter>Header Files\Bindable</Filter>
     </ClInclude>
@@ -340,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="Goal.h">
       <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowThrowMacro.h">
+      <Filter>Header Files\Exceptions\Macro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
